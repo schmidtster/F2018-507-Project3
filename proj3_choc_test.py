@@ -18,12 +18,12 @@ class TestDatabase(unittest.TestCase):
         self.assertEqual(len(result_list), 1795)
 
         sql = '''
-            SELECT Company, SpecificBeanBarName, CocoaPercent,
-                   Rating, BroadBeanOrigin
-            FROM Bars
-            WHERE Company="Woodblock"
-            ORDER BY Rating DESC
-        '''
+                    SELECT Company, SpecificBeanBarName, CocoaPercent,
+                           Rating
+                    FROM Bars
+                    WHERE Company="Woodblock"
+                    ORDER BY Rating DESC
+                '''
         results = cur.execute(sql)
         result_list = results.fetchall()
         #print(result_list)
