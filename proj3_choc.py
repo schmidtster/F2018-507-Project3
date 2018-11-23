@@ -331,6 +331,11 @@ def load_help_text():
 
 # Part 3: Implement interactive prompt. We've started for you!
 def interactive_prompt():
+    clean_database()
+    read_json()
+    read_csv()
+    update_country_codes()
+
     help_text = load_help_text()
     bars_commands = ["bars", "sellcountry", "sourcecountry", "sellregion", "sourceregion", "ratings", "cocoa", "top",
                      "bottom"]
