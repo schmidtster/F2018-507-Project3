@@ -1,6 +1,7 @@
 import sqlite3 as sqlite3
 import csv
 import json
+import pprint
 
 # proj3_choc.py
 # You can change anything in this file you want as long as you pass the tests
@@ -340,7 +341,9 @@ def interactive_prompt():
                     command_string += " " + params
             command_processed = process_command(command_string)
             for each_result in command_processed:
-                print("{:20.75} {:15} {:30} {:15} {:15} {:30}".format(each_result[0], each_result[1], each_result[2], each_result[3], each_result[4], each_result[5]))
+                # pp.pprint(each_result)
+                print("{:<30.30} | {:<30.30} | {:<25.25} | {:<5} | {:<5} | {:<25.25}".format(each_result[0], each_result[1], each_result[2], each_result[3], each_result[4], each_result[5]))
+
         elif countries_commands[0] in response_list:
             command_list = ["", "", "", "", ""]
             command_string = ""
@@ -366,7 +369,9 @@ def interactive_prompt():
                     command_string += " " + params
             command_processed = process_command(command_string)
             for each_result in command_processed:
-                print("{:20.5} {:16.2}".format(each_result[0], each_result[1]), each_result[2])
+                print(each_result)
+                # print("{:<30.30} | {:<25.25} | {:<5}".format(each_result[0], each_result[1]), each_result[2])
+
         elif companies_commands[0] in response_list:
             command_list = ["", "", "", ""]
             command_string = ""
@@ -389,7 +394,8 @@ def interactive_prompt():
                     command_string += " " + params
             command_processed = process_command(command_string)
             for each_result in command_processed:
-                print("{:25.5} {:16.2}".format(each_result[0], each_result[1]), each_result[2])
+                print("{:<30.30} | {:<25.25} | {:<5}".format(each_result[0], each_result[1]), each_result[2])
+
         elif regions_commands[0] in response_list:
             command_list = ["regions", "", "", ""]
             command_string = ""
@@ -412,12 +418,15 @@ def interactive_prompt():
                     command_string += " " + params
             command_processed = process_command(command_string)
             for each_result in command_processed:
-                print("{:21} {:16.2}".format(each_result[0], each_result[1]))
+                print("{:<25.25} | {:<5}".format(each_result[0], each_result[1]))
+
         elif response == 'help':
             print(help_text)
             continue
+
         elif response == "exit":
             response = response
+
         else:
             print("Command not recognized: ", response)
             interactive_prompt()
