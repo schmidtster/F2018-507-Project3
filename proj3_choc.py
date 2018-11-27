@@ -68,7 +68,7 @@ def read_csv():
         csvreader = csv.reader(csvDataFile)
         for row in csvreader:
             if row[0] != "Company":
-                insertion = (row[0], row[1], row[2], row[3], row[4].replace("%", ""), row[5], row[6], row[7], row[8])
+                insertion = (row[0], row[1], row[2], row[3], float(row[4].replace("%", ""))*.01, row[5], row[6], row[7], row[8])
                 statement = 'INSERT INTO "Bars" (Company, SpecificBeanBarName, REF, ReviewDate, CocoaPercent, ' \
                             'CompanyLocationId, Rating, BeanType, BroadBeanOriginId) '
                 statement += 'VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)'
@@ -373,20 +373,19 @@ def interactive_prompt():
                                                                                              each_result[1],
                                                                                              each_result[2],
                                                                                              each_result[3],
-                                                                                             each_result[4],
+                                                                                             str(round(each_result[4]*100)) + "%",
                                                                                              each_result[5]))
 
         elif countries_commands[0] in response_list:
             command_list = ["", "", "", "", ""]
             command_string = ""
-            print("yes")
             for each_parameter in response_list:
                 if "=" in each_parameter:
                     params = each_parameter.split("=")
                     if params[0] == countries_commands[1]:
                         command_list[1] = each_parameter
                     if params[0] in countries_commands[7:9]:
-                        command_list[3] = each_parameter
+                        command_list[4] = each_parameter
                 elif each_parameter in countries_commands[2:4]:
                     command_list[2] = each_parameter
                 elif each_parameter == countries_commands[0]:
@@ -400,8 +399,13 @@ def interactive_prompt():
                 if params != "":
                     command_string += " " + params
             command_processed = process_command(command_string)
-            for each_result in command_processed:
-                print("{:<30.30} | {:<25.25} | {:<5}".format(each_result[0], each_result[1], each_result[2]))
+            if "cocoa" in command_list:
+                for each_result in command_processed:
+                    print("{:<30.30} | {:<25.25} | {:<5}".format(each_result[0], each_result[1],
+                                                                 str(round(each_result[2]*100, 2)) + "%"))
+            else:
+                for each_result in command_processed:
+                    print("{:<30.30} | {:<25.25} | {:<5}".format(each_result[0], each_result[1], each_result[2]))
 
         elif companies_commands[0] in response_list:
             command_list = ["", "", "", ""]
@@ -424,8 +428,12 @@ def interactive_prompt():
                 if params != "":
                     command_string += " " + params
             command_processed = process_command(command_string)
-            for each_result in command_processed:
-                print("{:<30.30} | {:<25.25} | {:<5}".format(each_result[0], each_result[1], each_result[2]))
+            if "cocoa" in command_list:
+                for each_result in command_processed:
+                    print("{:<30.30} | {:<25.25} | {:<5}".format(each_result[0], each_result[1], str(round(each_result[2]*100))) + "%")
+            else:
+                for each_result in command_processed:
+                    print("{:<30.30} | {:<25.25} | {:<5}".format(each_result[0], each_result[1], each_result[2]))
 
         elif regions_commands[0] in response_list:
             command_list = ["regions", "", "", ""]
@@ -448,8 +456,12 @@ def interactive_prompt():
                 if params != "":
                     command_string += " " + params
             command_processed = process_command(command_string)
-            for each_result in command_processed:
-                print("{:<25.25} | {:<5}".format(each_result[0], each_result[1]))
+            if "cocoa" in command_list:
+                for each_result in command_processed:
+                    print("{:<25.25} | {:<5}".format(each_result[0], str(round(each_result[1]*100))) + "%")
+            else:
+                for each_result in command_processed:
+                    print("{:<25.25} | {:<5}".format(each_result[0], each_result[1]))
 
         elif response == 'help':
             print(help_text)
